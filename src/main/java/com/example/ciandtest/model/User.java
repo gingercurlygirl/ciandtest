@@ -18,9 +18,30 @@ public class User {
     @Size(min = 2, max = 20, message = "Username must be between 2 and 20 characters long")
     private String username;
 
+    @NotNull
+    @Min(value = 13, message = "You must have be 13 years old to use the application")
+    private Integer age;
+
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Todo> todos;
 
     public User() {}
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
 }

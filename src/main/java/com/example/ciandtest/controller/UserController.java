@@ -7,6 +7,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
+
 @RequestMapping("/users")
 @RestController
 public class UserController {
@@ -19,9 +22,11 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> create(@Valid @RequestBody User user) {
-        // TODO: implement me
-        // userService.addUser(user);
-        return ResponseEntity.ok(null);
+        Optional<User> exists = userService.findByUsername(user.getUsername());
+        if (exists.isEmpty()) {
+            return ResponseEntity.ok(userService.addUser(user));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-
 }
