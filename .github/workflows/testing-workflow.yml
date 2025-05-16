@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: print status
-        run: mvn -e -X clean test
+        run: echo "push detected"
 
   on-pull-request:
     if: github.event_name == 'pull_request'
@@ -19,4 +19,4 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Build with maven
-        run: echo 'pull request action triggered'
+        run: mvn -e -X clean test
