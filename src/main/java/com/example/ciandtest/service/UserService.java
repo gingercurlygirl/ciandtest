@@ -42,4 +42,12 @@ public class UserService {
         userRepository.deleteById(user.getId());
         return user;
     }
+
+    public boolean existsById(Long id) {
+        return userRepository.existsById(id);
+    }
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
 }

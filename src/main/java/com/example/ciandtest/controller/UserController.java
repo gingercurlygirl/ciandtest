@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -64,5 +65,21 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping("{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
+        Optional<User> exists = userService.findById(userId);
+        if (exists.isPresent()) {
+            User userToUpdate = exists.get();
+
+            if (user.getAge() != null && !Objects.equals(user.getAge(), userToUpdate.getAge())) userToUpdate.setAge(user.getAge());
+            if (user.getUsername() != null && !user.getUsername().equals(userToUpdate.getUsername())) userToUpdate.setUsername(user.getUsername());
+
+            return ResponseEntity.ok(userService.updateUser(userToUpdate));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 }
