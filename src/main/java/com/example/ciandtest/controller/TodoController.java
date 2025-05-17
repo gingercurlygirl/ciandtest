@@ -45,4 +45,14 @@ public class TodoController {
     public ResponseEntity<List<Todo>> getAllTodos() {
         return ResponseEntity.ok(todoService.getAllTodos());
     }
+
+    @DeleteMapping("/{todoId}")
+    public ResponseEntity<Todo> deleteTodoById(@PathVariable Long todoId) {
+        Optional<Todo> exists = todoService.findById(todoId);
+        if (exists.isPresent()) {
+            return ResponseEntity.ok(todoService.deleteTodo(exists.get()));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

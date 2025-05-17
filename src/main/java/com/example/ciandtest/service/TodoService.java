@@ -35,4 +35,13 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
+    public Optional<Todo> findById(Long id) {
+        return todoRepository.findById(id);
+    }
+
+    public Todo deleteTodo(Todo todo) {
+        todoRepository.delete(todo);
+        return todo;
+    }
+
 }
