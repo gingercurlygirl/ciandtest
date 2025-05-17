@@ -73,8 +73,8 @@ public class UserController {
         if (exists.isPresent()) {
             User userToUpdate = exists.get();
 
-            if (user.getAge() != null && !Objects.equals(user.getAge(), userToUpdate.getAge())) userToUpdate.setAge(user.getAge());
-            if (user.getUsername() != null && !user.getUsername().equals(userToUpdate.getUsername())) userToUpdate.setUsername(user.getUsername());
+            if (user.getAge() != null) userToUpdate.setAge(user.getAge());
+            if (user.getUsername() != null) userToUpdate.setUsername(user.getUsername());
 
             return ResponseEntity.ok(userService.updateUser(userToUpdate));
         } else {
