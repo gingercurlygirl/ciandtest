@@ -19,7 +19,7 @@ jobs:
           --health-timeout=5s
           --health-retries=3
     env:
-      DB_DATABASE: jdbc:mysql://localhost:3306/fake_db
+      DB_DATABASE: jdbc:mysql://localhost:3306/test_db
       DB_TEST_DATABASE: jdbc:mysql://localhost:3306/test_db
       DB_USERNAME: test_user
       DB_PASSWORD: test_password
