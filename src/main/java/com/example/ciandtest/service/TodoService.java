@@ -23,7 +23,7 @@ public class TodoService {
     }
 
     public Todo addTodo(Todo todo) {
-        entityManager.clear(); // TODO: testiraj kasnije jel ovo potrebno
+        entityManager.clear(); // TODO: testiraj kasnije jel ovo potrebno, i dodaj datum
         return todoRepository.save(todo);
     }
 

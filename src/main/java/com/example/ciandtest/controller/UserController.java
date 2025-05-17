@@ -36,7 +36,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("{userId}")
+    @PostMapping("/{userId}")
     public ResponseEntity<Todo> createTodoForUser(@PathVariable Long userId, @Valid @RequestBody Todo todo) {
         Optional<User> exists = userService.findById(userId);
         if (exists.isPresent()) {
@@ -52,12 +52,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping("{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         return ResponseEntity.of(userService.findById(userId));
     }
 
-    @DeleteMapping("{userId}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<User> deleteUserById(@PathVariable Long userId) {
         Optional<User> exists = userService.findById(userId);
         if (exists.isPresent()) {
@@ -67,7 +67,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
         Optional<User> exists = userService.findById(userId);
         if (exists.isPresent()) {
