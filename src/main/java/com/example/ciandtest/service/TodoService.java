@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +25,10 @@ public class TodoService {
     }
 
     public Todo addTodo(Todo todo) {
-        entityManager.clear(); // TODO: testiraj kasnije jel ovo potrebno, i dodaj datum
+        entityManager.clear(); // TODO: testiraj kasnije jel ovo potrebno
+        LocalDate now = LocalDate.now();
+        todo.setCreate_date(Date.valueOf(now));
+        todo.setCompleted(false);
         return todoRepository.save(todo);
     }
 
