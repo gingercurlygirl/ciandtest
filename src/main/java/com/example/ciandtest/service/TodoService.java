@@ -31,4 +31,8 @@ public class TodoService {
         return todoRepository.findByUserId(userId);
     }
 
+    public List<Todo> getAllTodos() {
+        return todoRepository.findAll();
+    }
+
 }

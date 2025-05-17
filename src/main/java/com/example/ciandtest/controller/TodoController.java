@@ -40,4 +40,9 @@ public class TodoController {
     public ResponseEntity<List<Todo>> getUserTodos(@PathVariable Long userId) {
         return ResponseEntity.ok(todoService.getTodos(userId));
     }
+
+    @GetMapping()
+    public ResponseEntity<List<Todo>> getAllTodos() {
+        return ResponseEntity.ok(todoService.getAllTodos());
+    }
 }
