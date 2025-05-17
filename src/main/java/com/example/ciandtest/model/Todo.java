@@ -20,7 +20,7 @@ public class Todo {
 
     private Date create_date;
 
-    private boolean completed;
+    private Boolean completed;
 
     @JsonIgnore
     @ManyToOne
@@ -46,11 +46,11 @@ public class Todo {
         this.create_date = create_date;
     }
 
-    public boolean isCompleted() {
+    public Boolean isCompleted() {
         return completed;
     }
 
-    public void setCompleted(boolean completed) {
+    public void setCompleted(Boolean completed) {
         this.completed = completed;
     }
 

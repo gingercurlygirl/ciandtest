@@ -55,4 +55,20 @@ public class TodoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{todoId}")
+    public ResponseEntity<Todo> updateTodo(@PathVariable Long todoId, @RequestBody Todo todo) {
+        Optional<Todo> exists = todoService.findById(todoId);
+        if (exists.isPresent()) {
+            Todo todoToUpdate = exists.get();
+
+            if (todo.getTask() != null) todoToUpdate.setTask(todo.getTask());
+            if (todo.isCompleted() != null) todoToUpdate.setCompleted(todo.isCompleted());
+
+            return ResponseEntity.ok(todoService.updateTodo(todoToUpdate));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 }
