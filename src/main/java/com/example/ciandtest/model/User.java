@@ -62,4 +62,12 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public List<Todo> getTodos() {
+        return todos;
+    }
+
+    public void setTodos(List<Todo> todos) {
+        this.todos = todos;
+    }
 }
