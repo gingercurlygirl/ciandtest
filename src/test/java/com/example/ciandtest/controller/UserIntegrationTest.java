@@ -11,6 +11,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.net.URI;
+
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -59,6 +61,25 @@ class UserIntegrationTest {
 
         ResponseEntity<User> getResponseAfter = restTemplate.getForEntity("http://localhost:" + port + "/users/1", User.class);
         assertEquals(HttpStatus.NOT_FOUND, getResponseAfter.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateUserByHttp() {
+        /* Integration test:
+         * This test verifies the HTTP API for update a User.
+         * It checks the correct status responses and the data returned in the response body.
+         */
+
+        restTemplate.put("http://localhost:" + port + "/users/2", new User(null, "jolie", 15));
+        ResponseEntity<User> getResponse = restTemplate.getForEntity("http://localhost:" + port + "/users/2", User.class);
+        assertEquals(HttpStatus.OK, getResponse.getStatusCode());
+
+        assertNotNull(getResponse.getBody());
+        assertEquals(2L, getResponse.getBody().getId());
+        assertEquals("jolie", getResponse.getBody().getUsername());
+        assertEquals(15, getResponse.getBody().getAge());
+        assertNull(getResponse.getBody().getTodos());
+
     }
 }
 
