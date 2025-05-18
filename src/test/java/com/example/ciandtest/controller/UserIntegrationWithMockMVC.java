@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 
@@ -25,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @AutoConfigureMockMvc
 @SpringBootTest
+@TestPropertySource("classpath:application-test-h2.properties")
 class UserIntegrationWithMockMVC {
 
     @Autowired
@@ -46,7 +48,7 @@ class UserIntegrationWithMockMVC {
          */
 
         //arrange
-        User user = new User(null, "harry", 15);
+        User user = new User(1L, "harry", 15);
 
         //act & assert
         mockMvc.perform(post("/users")
