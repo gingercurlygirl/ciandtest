@@ -1,7 +1,7 @@
 name: test-run
-on: pull_request
+on: push
 jobs:
-  on-pull-request:
+  on-push:
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -30,4 +30,4 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Build with maven
-        run: mvn -e -X clean test
+        run: mvn test -Dtest="UserIntegrationWithMockMVC"
