@@ -30,6 +30,9 @@ public class Todo {
     public Todo() {
     }
 
+    public Todo(long l, String firstTodo) {
+    }
+
     public String getTask() {
         return task;
     }
@@ -60,5 +63,13 @@ public class Todo {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
