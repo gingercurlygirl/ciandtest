@@ -1,6 +1,7 @@
 package com.example.ciandtest.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import com.example.ciandtest.model.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,27 @@ class UserIntegrationTest {
         assertNotNull(postResponse.getBody());
         Long userId = postResponse.getBody().getId();
 
-        ResponseEntity<User> getResponse = restTemplate.getForEntity("http://localhost:" + port + "/users/"+ userId, User.class);
+        ResponseEntity<User> getResponse = restTemplate.getForEntity("http://localhost:" + port + "/users/" + userId, User.class);
 
         assertEquals(HttpStatus.OK, getResponse.getStatusCode());
         assertNotNull(getResponse.getBody());
         assertEquals(6L, getResponse.getBody().getId());
         assertEquals("harry", getResponse.getBody().getUsername());
+    }
+
+    @Test
+    public void testDeleteUserByHttp() {
+        /* Integration test:
+         * This test verifies the HTTP API for delete a User.
+         * It checks the correct status responses for later get calls.
+         */
+        ResponseEntity<User> getResponseBefore = restTemplate.getForEntity("http://localhost:" + port + "/users/1", User.class);
+        assertEquals(HttpStatus.OK, getResponseBefore.getStatusCode());
+
+        restTemplate.delete("http://localhost:" + port + "/users/1");
+
+        ResponseEntity<User> getResponseAfter = restTemplate.getForEntity("http://localhost:" + port + "/users/1", User.class);
+        assertEquals(HttpStatus.NOT_FOUND, getResponseAfter.getStatusCode());
     }
 }
 
