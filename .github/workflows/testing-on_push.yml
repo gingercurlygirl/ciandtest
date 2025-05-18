@@ -1,7 +1,7 @@
 name: test-run
 on: push
 jobs:
-  on-pull-request:
+  on-push:
     runs-on: ubuntu-latest
     services:
       mysql:
