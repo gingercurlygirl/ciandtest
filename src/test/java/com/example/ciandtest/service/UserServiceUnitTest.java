@@ -2,6 +2,7 @@ package com.example.ciandtest.service;
 
 import com.example.ciandtest.model.Todo;
 import com.example.ciandtest.model.User;
+import com.example.ciandtest.model.UserDTO;
 import com.example.ciandtest.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +38,7 @@ class UserServiceUnitTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         //act
-        Optional<User> result = userService.findById(1L);
+        Optional<UserDTO> result = userService.findById(1L);
 
         //assert
         assertTrue(result.isPresent());
@@ -58,7 +59,7 @@ class UserServiceUnitTest {
         lenient().when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         //act
-        userService.deleteUser(user);
+        userService.deleteUser(user.getId());
 
         //assert
         assertFalse(userRepository.existsById(1L));

@@ -1,6 +1,8 @@
 package com.example.ciandtest.service;
 
+import com.example.ciandtest.model.Todo;
 import com.example.ciandtest.model.User;
+import com.example.ciandtest.model.UserDTO;
 import com.example.ciandtest.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
@@ -8,6 +10,7 @@ import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -21,29 +24,47 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User addUser(User user) {
+    public UserDTO addUser(User user) {
         entityManager.clear(); // TODO: testiraj kasnije jel ovo potrebno
-        return userRepository.save(user);
+        return UserMapper.INSTANCE.userToUserDTO(userRepository.save(user));
     }
 
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<UserDTO> findByUsername(String username) {
+        Optional<User> user =  userRepository.findByUsername(username);
+
+        if (user.isPresent()) {
+            Optional<UserDTO> result = user.map(UserMapper.INSTANCE::userToUserDTO);
+            if (result.isPresent()) {
+                return result;
+            }
+        }
+
+        return Optional.empty();
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserDTO> findById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isPresent()) {
+            Optional<UserDTO> result = user.map(UserMapper.INSTANCE::userToUserDTO);
+            if (result.isPresent()) {
+                return result;
+            }
+        }
+
+        return Optional.empty();
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream().map(UserMapper.INSTANCE::userToUserDTO).collect(Collectors.toList());
     }
 
-    public User deleteUser(User user) {
-        userRepository.delete(user);
-        return user;
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
     }
 
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    public UserDTO updateUser(UserDTO user) {
+        return UserMapper.INSTANCE.userToUserDTO(userRepository.save(new User(user)));
     }
 }

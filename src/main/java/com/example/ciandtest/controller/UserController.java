@@ -2,6 +2,7 @@ package com.example.ciandtest.controller;
 
 import com.example.ciandtest.model.Todo;
 import com.example.ciandtest.model.User;
+import com.example.ciandtest.model.UserDTO;
 import com.example.ciandtest.service.TodoService;
 import com.example.ciandtest.service.UserService;
 
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 
@@ -27,8 +27,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        Optional<User> exists = userService.findByUsername(user.getUsername());
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody User user) {
+        Optional<UserDTO> exists = userService.findByUsername(user.getUsername());
         if (exists.isEmpty()) {
             return ResponseEntity.ok(userService.addUser(user));
         } else {
@@ -38,9 +38,9 @@ public class UserController {
 
     @PostMapping("/{userId}")
     public ResponseEntity<Todo> createTodoForUser(@PathVariable Long userId, @Valid @RequestBody Todo todo) {
-        Optional<User> exists = userService.findById(userId);
+        Optional<UserDTO> exists = userService.findById(userId);
         if (exists.isPresent()) {
-            todo.setUser(exists.get());
+            todo.setUser(new User(exists.get()));
             return ResponseEntity.ok(todoService.addTodo(todo));
         } else {
             return ResponseEntity.notFound().build();
@@ -48,30 +48,31 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
         return ResponseEntity.of(userService.findById(userId));
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<User> deleteUserById(@PathVariable Long userId) {
-        Optional<User> exists = userService.findById(userId);
+    public ResponseEntity<UserDTO> deleteUserById(@PathVariable Long userId) {
+        Optional<UserDTO> exists = userService.findById(userId);
         if (exists.isPresent()) {
-            return ResponseEntity.ok(userService.deleteUser(exists.get()));
+            userService.deleteUser(exists.get().getId());
+            return ResponseEntity.ok(exists.get());
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User user) {
-        Optional<User> exists = userService.findById(userId);
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long userId, @RequestBody User user) {
+        Optional<UserDTO> exists = userService.findById(userId);
         if (exists.isPresent()) {
-            User userToUpdate = exists.get();
+            UserDTO userToUpdate = exists.get();
 
             if (user.getAge() != null) userToUpdate.setAge(user.getAge());
             if (user.getUsername() != null) userToUpdate.setUsername(user.getUsername());

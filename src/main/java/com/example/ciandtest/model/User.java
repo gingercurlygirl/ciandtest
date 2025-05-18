@@ -1,5 +1,6 @@
 package com.example.ciandtest.model;
 
+import com.example.ciandtest.repository.UserRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -37,6 +38,12 @@ public class User {
         this.id = id;
         this.username = username;
         this.age = age;
+    }
+
+    public User(UserDTO userDto) {
+        this.id = userDto.getId();
+        this.username = userDto.getUsername();
+        this.age = userDto.getAge();
     }
 
     public String getUsername() {
