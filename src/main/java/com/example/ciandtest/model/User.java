@@ -28,6 +28,17 @@ public class User {
 
     public User() {}
 
+    public User(Long id, String username) {
+        this.id = id;
+        this.username = username;
+    }
+
+    public User(Long id, String username, Integer age) {
+        this.id = id;
+        this.username = username;
+        this.age = age;
+    }
+
     public String getUsername() {
         return username;
     }

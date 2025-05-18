@@ -30,6 +30,9 @@ public class Todo {
     public Todo() {
     }
 
+    public Todo(long l, String firstTodo) {
+    }
+
     public String getTask() {
         return task;
     }
