@@ -2,6 +2,7 @@ package com.example.ciandtest.controller;
 
 import com.example.ciandtest.model.Todo;
 import com.example.ciandtest.model.User;
+import com.example.ciandtest.model.UserDTO;
 import com.example.ciandtest.service.TodoService;
 import com.example.ciandtest.service.UserService;
 
@@ -27,9 +28,9 @@ public class TodoController {
 
     @PostMapping("/user/{userId}")
     public ResponseEntity<Todo> createTodoForUser(@PathVariable Long userId, @Valid @RequestBody Todo todo) {
-        Optional<User> exists = userService.findById(userId);
+        Optional<UserDTO> exists = userService.findById(userId);
         if (exists.isPresent()) {
-            todo.setUser(exists.get());
+            todo.setUser(new User(exists.get()));
             return ResponseEntity.ok(todoService.addTodo(todo));
         } else {
             return ResponseEntity.notFound().build();
