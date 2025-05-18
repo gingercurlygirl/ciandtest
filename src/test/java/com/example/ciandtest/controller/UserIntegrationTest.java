@@ -10,12 +10,14 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 
 import java.net.URI;
 
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource("classpath:application-test-h2.properties")
 class UserIntegrationTest {
 
     @LocalServerPort
@@ -44,7 +46,7 @@ class UserIntegrationTest {
 
         assertEquals(HttpStatus.OK, getResponse.getStatusCode());
         assertNotNull(getResponse.getBody());
-        assertEquals(6L, getResponse.getBody().getId());
+        assertEquals(1L, getResponse.getBody().getId());
         assertEquals("harry", getResponse.getBody().getUsername());
     }
 
