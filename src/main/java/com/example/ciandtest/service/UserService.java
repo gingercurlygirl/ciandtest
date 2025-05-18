@@ -60,9 +60,8 @@ public class UserService {
         return users.stream().map(UserMapper.INSTANCE::userToUserDTO).collect(Collectors.toList());
     }
 
-    public UserDTO deleteUser(UserDTO user) {
-        userRepository.deleteById(user.getId());
-        return user;
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
     }
 
     public UserDTO updateUser(UserDTO user) {

@@ -61,7 +61,8 @@ public class UserController {
     public ResponseEntity<UserDTO> deleteUserById(@PathVariable Long userId) {
         Optional<UserDTO> exists = userService.findById(userId);
         if (exists.isPresent()) {
-            return ResponseEntity.ok(userService.deleteUser(exists.get()));
+            userService.deleteUser(exists.get().getId());
+            return ResponseEntity.ok(exists.get());
         } else {
             return ResponseEntity.notFound().build();
         }

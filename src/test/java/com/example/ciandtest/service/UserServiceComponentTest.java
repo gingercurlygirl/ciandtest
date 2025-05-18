@@ -1,6 +1,7 @@
 package com.example.ciandtest.service;
 
 import com.example.ciandtest.model.User;
+import com.example.ciandtest.model.UserDTO;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ class UserServiceComponentTest {
 
         //act
         userService.addUser(user);
-        Optional<User> fetchedUser = userService.findById(1L);
+        Optional<UserDTO> fetchedUser = userService.findById(1L);
 
         //assert
         assertTrue(fetchedUser.isPresent());
